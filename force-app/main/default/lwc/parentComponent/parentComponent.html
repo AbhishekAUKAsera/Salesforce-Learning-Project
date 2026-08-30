@@ -1,0 +1,5 @@
+<template>
+    <c-child-component onmessage={getMessageFromChild}></c-child-component>
+    <p>Message from Child in Parent : {messageFromchild}</p>
+    <c-child-component received-message={messageFromParent}></c-child-component>
+</template>

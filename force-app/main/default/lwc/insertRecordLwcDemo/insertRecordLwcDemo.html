@@ -1,0 +1,12 @@
+<template>
+   <lightning-card>
+        <template if:true={spinnerStatus}>
+            <div class="spinner">
+                <lightning-spinner variant="brand" alternative-text="Loading..."></lightning-spinner>
+            </div>
+        </template>
+        <div style="text-align : right">
+            <lightning-button style="margin:5px;" onclick={toggleAccordion} label={toggleAccordionLabel} slot="actions"></lightning-button>
+        </div>
+   </lightning-card> 
+</template>

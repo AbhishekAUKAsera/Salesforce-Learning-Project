@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>MovieChannel</masterLabel>
+    <isExposed>true</isExposed>
+    <description>This is a channel for communication between movie search and movie detail.</description>
+    <lightningMessageFields>
+        <fieldName>movieId</fieldName>
+        <description>This is the record Id that changed</description>
+    </lightningMessageFields>
+</LightningMessageChannel>

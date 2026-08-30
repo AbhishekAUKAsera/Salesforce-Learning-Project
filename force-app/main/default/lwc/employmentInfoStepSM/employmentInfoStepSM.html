@@ -1,0 +1,62 @@
+<template>
+    <div class="employment-info-step">
+        <lightning-card title="Employment Information" icon-name="standard:work">
+            <div class="slds-p-around_medium">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="Employer Name"
+                            value={employerName}
+                            disabled>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="Job Title"
+                            value={jobTitle}
+                            disabled>
+                        </lightning-input>
+                    </div>
+                </div>
+                
+                <div class="slds-grid slds-gutters slds-m-top_small">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="Monthly Income"
+                            type="number"
+                            value={monthlyIncome}
+                            formatter="currency"
+                            disabled>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="Years Employed"
+                            type="number"
+                            value={yearsEmployed}
+                            disabled>
+                        </lightning-input>
+                    </div>
+                </div>
+                
+                <div class="slds-grid slds-gutters slds-m-top_small">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="Employment Type"
+                            value={employmentType}
+                            disabled>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input
+                            label="Employer Phone"
+                            type="tel"
+                            value={employerPhone}
+                            disabled>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+    </div>
+</template>

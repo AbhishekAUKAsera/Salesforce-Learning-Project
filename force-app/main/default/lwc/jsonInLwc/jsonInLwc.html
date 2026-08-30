@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="JSON Uploader" icon-name="custom:custom63">
+        <lightning-button label="Upload JSON" onclick={handleSave} slot="actions"></lightning-button>
+        <template if:true={jsonString}>
+            <div class="scroller">
+                <pre>{jsonString}</pre>
+            </div>
+        </template>
+    </lightning-card>
+</template>

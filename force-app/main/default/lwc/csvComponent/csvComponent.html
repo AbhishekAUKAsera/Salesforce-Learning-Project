@@ -1,0 +1,8 @@
+<template>
+    <div>
+        <!-- Brand variant: Identifies the primary action in a group of buttons -->
+        <lightning-button variant="brand" label="Export Data" title="Export Data into CSV" icon-name="utility:download" onclick={clickHandler}
+        disabled={checkRecord}></lightning-button>
+    </div>
+    <lightning-datatable key-field="id" data={accountData} columns={columns}> </lightning-datatable>
+</template>

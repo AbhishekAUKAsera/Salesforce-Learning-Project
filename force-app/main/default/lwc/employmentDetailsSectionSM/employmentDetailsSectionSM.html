@@ -1,0 +1,36 @@
+<template>
+    <div class="employment-details-section">
+        <div class="slds-card__body">
+            <h3 class="slds-text-heading_small slds-m-bottom_medium">
+                Employment Details
+                <lightning-icon icon-name="utility:info" size="xx-small" class="slds-m-left_xx-small"></lightning-icon>
+            </h3>
+<!--In SLDS, gutters provide horizontal spacing between columns within a grid layout. When you add the slds-gutters class to an slds-grid container, it applies horizontal padding to all of its child columns (slds-col), creating a clean, consistent gap between them without breaking the grid alignment.-->
+<div class="slds-grid slds-gutters">
+    <div class="slds-col slds-size_1-of-2">
+        <lightning-combobox
+            label="Employment Type"
+            value={employmentType}
+            options={employmentTypeOptions}
+            onchange={handleEmploymentTypeChange}>
+        </lightning-combobox>
+    </div>
+    <div class="slds-col slds-size_1-of-2">
+        <lightning-input
+            label="Years Employed"
+            type="number"
+            value={yearsEmployed}
+            onchange={handleYearsEmployedChange}
+            min="0"
+            max="50">
+        </lightning-input>
+    </div>
+</div>
+
+<div class="slds-text-body_small slds-text-color_weak slds-m-top_small">
+    <lightning-icon icon-name="utility:check" size="xx-small" variant="success"></lightning-icon>
+    This section demonstrates three-level component nesting: Wizard → Step → Section
+</div>
+</div>
+</div>
+</template>

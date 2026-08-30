@@ -1,0 +1,27 @@
+<template>
+    <lightning-card title="Currency Convertor" icon-name="utility:currency">
+        <div class="formatfile slds-var-p-around_small">
+            <lightning-input label="Enter Amount" onchange={changeHandler} name="amount"></lightning-input>
+        </div>
+        <div class="formatfile slds-var-p-around_small">
+            <!--From Currency and To Currency-->
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning-combobox label="From Currency" onchange={changeHandler} name="fromcurr" options={currencyOptions}></lightning-combobox>
+                </div>
+                <div class="slds-col">
+                    <lightning-combobox label="To Currency" onchange={changeHandler} name="tocurr" options={currencyOptions}></lightning-combobox>
+                </div>
+            </div>
+        </div>
+        <div class="formatfile slds-var-p-around_small">
+            <lightning-button label="Convert" onclick={clickHandler} variant="brand"></lightning-button>
+        </div>
+        <template lwc:if={showOutput}>
+            <div>
+                <p>Converted Value : </p>
+                <p><lightning-formatted-number value={convertedValue} format-style="currency" currency-code={toCurrency} currency-display-as="name"></lightning-formatted-number></p>
+            </div>
+        </template>
+    </lightning-card>
+</template>

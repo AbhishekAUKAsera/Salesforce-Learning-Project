@@ -1,0 +1,14 @@
+:host {
+    display: block;
+    background-color: #f3f2f2;
+    padding: 10px;
+    border-radius: 8px;
+}
+::slotted(p) {
+    color: red;
+    font-size: 18px;
+}
+/*
+:host() styles the root component.
+::slotted() styles content passed inside <slot>.
+*/

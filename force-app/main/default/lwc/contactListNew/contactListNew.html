@@ -1,0 +1,10 @@
+<template>
+    <lightning-card>
+        <h1>{myName}</h1>
+        <template if:true={hasContacts}>
+            <template for:each={contacts.data} for:item="contact">
+                <h1 key={contact.Id}>Contact</h1>
+            </template>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="StaticEventListener" icon-name="standard:logging">
+        <div class="slds-var-m-horizontal_medium">
+            <lightning-radio-group label="Event Mode" type="button" options={modeOptions} value={eventMode} onchange={handleModeChange} 
+            class="slds-var-m-bottom_large"></lightning-radio-group>
+
+            <div class={boxClass} onclick={handleClick} onmouseenter={handleMouseEnter} onmouseleave={handleMouseLeave}>
+                <div class="box-message">{message}</div>
+                <div class="box-hint">{hintText}</div>
+            </div>
+        </div>
+    </lightning-card>
+</template>
