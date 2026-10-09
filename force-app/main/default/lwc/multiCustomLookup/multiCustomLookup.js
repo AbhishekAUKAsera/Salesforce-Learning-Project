@@ -44,7 +44,7 @@ export default class MultiCustomLookup extends LightningElement {
         console.log('SELECTED OR CLICKED RECORD ID ' + JSON.stringify(recId));
         if(this.validateDuplicate(recId)){
             let selectedRecord = this.searchOutput.find((currItem) => currItem.Id === recId);
-            console.log('SELECTED RECORD ' + JSON.stringify(selectedRecord)); //SELECTED RECORD {"Id":"001g700000d7ERIAA2","Name":"University of Arizona"}
+            console.log('SELECTED RECORD ' + JSON.stringify(selectedRecord));
             let pill = {
                 type :'icon',
                 label : selectedRecord.Name,
@@ -53,9 +53,9 @@ export default class MultiCustomLookup extends LightningElement {
                 alternativeText : selectedRecord.Name
             };
             this.selectedRecords = [...this.selectedRecords, pill];
-            console.log('SELECTED RECORDS for PILL' + JSON.stringify(this.selectedRecords));//[{"type":"icon","label":"University of Arizona","name":"001g700000d7ERIAA2","iconName":"standard:account","alternativeText":"University of Arizona"}]
+            console.log('SELECTED RECORDS for PILL' + JSON.stringify(this.selectedRecords));
 
-            //With this we are  closing the dropdown and clear search results if you dont want to close comment this code
+            // close the dropdown and clear search results
             this.hasRecords = false;
             this.searchOutput = [];
             this.searchKey = '';
@@ -68,11 +68,11 @@ export default class MultiCustomLookup extends LightningElement {
 
     handleItemRemove(event) {
         const name = event.detail.item.name;
-        console.log(name + " pill was removed!"); //001g700000d7ERIAA2 pill was removed!
+        console.log(name + " pill was removed!");
         const index = event.detail.index;
         this.selectedRecords.splice(index, 1);
     }
-    //Checks for duplicates via validateDuplicate
+
     validateDuplicate(selectedRecord){
         let isValid = true;
         let isRecordAlreadySelected = this.selectedRecords.find(currItem => currItem.name === selectedRecord);

@@ -1,0 +1,96 @@
+<template>
+    <lightning-card title="Math Calculator" icon-name="utility:formula">
+        <div class="slds-var-p-around_medium">
+
+            <!-- Inputs row -->
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input
+                        type="number"
+                        label="First Number (A)"
+                        value={operandA}
+                        step="any"
+                        onchange={handleOperandAChange}
+                        required>
+                    </lightning-input>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-combobox
+                        label="Operator"
+                        value={selectedOperator}
+                        options={operatorOptions}
+                        onchange={handleOperatorChange}
+                        required>
+                    </lightning-combobox>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input
+                        type="number"
+                        label="Second Number (B)"
+                        value={operandB}
+                        step="any"
+                        onchange={handleOperandBChange}
+                        required>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Calculate button -->
+            <div class="slds-var-m-top_medium">
+                <lightning-button
+                    label="Calculate"
+                    variant="brand"
+                    icon-name="utility:apex"
+                    disabled={isLoading}
+                    onclick={handleCalculate}>
+                </lightning-button>
+
+                <lightning-button
+                    label="Clear"
+                    variant="neutral"
+                    class="slds-var-m-left_small"
+                    disabled={isLoading}
+                    onclick={handleClear}>
+                </lightning-button>
+            </div>
+
+            <!-- Loading spinner -->
+            <template lwc:if={isLoading}>
+                <div class="slds-var-m-top_medium slds-align_absolute-center">
+                    <lightning-spinner
+                        alternative-text="Calculating…"
+                        size="small">
+                    </lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Error message -->
+            <template lwc:if={errorMessage}>
+                <div class="slds-var-m-top_medium">
+                    <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                        <lightning-icon
+                            icon-name="utility:error"
+                            alternative-text="Error"
+                            size="x-small"
+                            class="slds-var-m-right_x-small">
+                        </lightning-icon>
+                        <span>{errorMessage}</span>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Result -->
+            <template lwc:if={hasResult}>
+                <div class="slds-var-m-top_large result-card">
+                    <div class="slds-box slds-theme_shade slds-align_absolute-center result-box">
+                        <p class="result-equation">{equation}</p>
+                        <p class="result-value">{formattedResult}</p>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

@@ -20,18 +20,8 @@ export default class EmploymentDetailsSectionSM extends LightningElement {
         ];
     }
 
-    handleEmploymentTypeChange(event){
-        if(!this.stateManagerRecord){
-            console.error('stateManagerRecord is not available');
-            return;
-        }
-        try{
-            this.stateManagerRecord.updateEmploymentInfo({
-                employmentType : event.target.value
-            });
-        }catch(error){
-            console.error('Error updating employment type: ', error);
-        }
+    handleEmploymentTypeChange(){
+        
     }
 
 }

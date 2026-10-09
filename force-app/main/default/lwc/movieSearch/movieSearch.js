@@ -37,7 +37,7 @@ export default class MovieSearch extends LightningElement {
             console.log('SELECTED SEARCH ' + this.selectedSearch);
         }else if(name === 'pageno'){
             this.selectedPageNo = value;
-            console.log('SELECTED Page No ' + this.selectedPageNo);
+            console.log('SELECTED PAge No ' + this.selectedPageNo);
         }
         //debouncing
         clearTimeout(this.delayTimeout);

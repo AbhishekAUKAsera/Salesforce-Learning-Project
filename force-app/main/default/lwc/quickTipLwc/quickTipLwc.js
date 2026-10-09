@@ -5,9 +5,6 @@ import NAME_FIELD from '@salesforce/schema/User.Name';
 import EMAIL_FIELD from '@salesforce/schema/User.Email';
 import FIRST_NAME_FIELD from '@salesforce/schema/User.FirstName';
 import LAST_NAME_FIELD from '@salesforce/schema/User.LastName';
-import IS_GUEST from '@salesforce/user/isGuest';
-import hasPermission from '@salesforce/userPermission/ViewAllData';
-import hasCustomPermission from '@salesforce/customPermission/My_Custom_Permission';
 
 export default class QuickTipLwc extends LightningElement {
     userId = USER_ID;

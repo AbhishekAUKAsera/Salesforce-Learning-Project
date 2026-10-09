@@ -146,7 +146,6 @@ export default class WordDocGenerator extends LightningElement {
 
         // Call Apex methods to get related contacts and account details
         // Use Promise.all to fetch both concurrently
-//It uses Promise.all to call both Apex methods concurrently. This is highly efficient, as it fetches the Account details and Contact list at the same time rather than waiting for one to finish before starting the other.
         Promise.all([
             getAllRelatedContacts({ acctId: this.recordId }),
             getAccountDetails({ acctId: this.recordId })

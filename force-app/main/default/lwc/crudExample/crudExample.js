@@ -78,7 +78,8 @@ export default class CrudExample extends LightningElement {
     record({data, error}){
         if(data){
             console.log('DATA ' + JSON.stringify(data));
-            
+            this.accountName = data.accountName; //Wrong
+            console.log('Wrong ACCOUNT Name ' + JSON.stringify(this.accountName));
             this.accountName = getFieldValue(data, ACCOUNT_NAME);
             console.log('Prepopulated ACCOUNT Name ' + JSON.stringify(this.accountName));
             this.accountWebsite = getFieldValue(data, ACCOUNT_WEBSITE);
