@@ -65,4 +65,21 @@ public with sharing class DatabaseUtility {
             }
         }
     }
+
+    /**
+        * @description Retrieves positions for the given city and logs each record.
+        * @param cityName The location name used to filter Position__c records.
+    */
+    public static void getPositionsbyLocation(String cityName){
+        if(cityName != null && cityName != ''){
+            List<Position__c> lstPositions = [SELECT Id, Name, Hiring_Manager__c, Location_Name__c, Maximum_Pay__c, Milestone_Date__c,
+            Minimum_Pay__c, Number_of_Candidates_related_to_this_Pos__c FROM Position__c WITH USER_MODE];
+
+            if(!lstPositions.isEmpty()){
+                for(Position__c pos :lstPositions ){
+                    System.debug('Position Record is ' + pos);
+                }
+            }
+        }
+    }
 }
