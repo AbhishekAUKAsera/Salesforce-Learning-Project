@@ -82,4 +82,23 @@ public with sharing class DatabaseUtility {
             }
         }
     }
+
+    /**
+        * @description Retrieves and logs all Accounts whose Name starts with the given prefix.
+        * @param startingChar The starting character(s) to match against Account Name.
+    */
+    public static void GetAccountsByStartingChar(String startingchar){
+        if(startingchar != null && startingchar != ''){
+            startingchar += '%';
+
+            List<Account> lstAccounts = [SELECT Id, Name, Rating, Industry, AnnualRevenue, Active__c FROM Account WHERE Name 
+            LIKE : startingchar  WITH USER_MODE];
+            System.debug('Collection size is : ' +  lstAccounts.size());
+            if(!lstAccounts.isEmpty()){
+                for(Account acc : lstAccounts){
+                    System.debug('Account Record is ' + acc);
+                }
+            }
+        }
+    }
 }
