@@ -11,7 +11,7 @@ public with sharing class DatabaseUtility {
                 System.debug('Lead Status is ' + ld.Status);
                 System.debug('Contact Number is ' + ld.Phone);
                 System.debug('Fax Number is ' + ld.Fax);
-                System.debug('Email id.. ' + ld.Email)
+                System.debug('Email id.. ' + ld.Email);
             }
         }
     }
