@@ -37,4 +37,32 @@ public with sharing class DatabaseUtility {
             System.debug('User Record is ' + u);
         }
     }
+
+        /**
+     * @description Retrieves all Position__c records and writes their details
+     * to the debug log. Uses user mode so that CRUD and field-level security
+     * are enforced for the running user.
+     */
+    public static void getPositionDetails() {
+        Map<Id, Position__c> mapPositions = new Map<Id, Position__c>([
+            SELECT Id, Hiring_Manager__c, Hiring_Manager__r.Name, Location_Name__c,
+                   Maximum_Pay__c, Milestone_Date__c, Minimum_Pay__c,
+                   Number_of_Candidates_related_to_this_Pos__c, Name
+            FROM Position__c
+            WITH USER_MODE
+        ]);
+
+        System.debug('Collections size is ' + mapPositions.size());
+
+        if (!mapPositions.isEmpty()) {
+            for (Id recordId : mapPositions.keySet()) {
+                System.debug('Position Record Id is ' + recordId + '--Record ' + mapPositions.get(recordId));
+                System.debug('Position Name is ' + mapPositions.get(recordId).Name);
+            }
+
+            for (Position__c p : mapPositions.values()) {
+                System.debug('Position record is.. ' + p);
+            }
+        }
+    }
 }
