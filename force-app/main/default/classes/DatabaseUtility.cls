@@ -73,7 +73,7 @@ public with sharing class DatabaseUtility {
     public static void getPositionsbyLocation(String cityName){
         if(cityName != null && cityName != ''){
             List<Position__c> lstPositions = [SELECT Id, Name, Hiring_Manager__c, Location_Name__c, Maximum_Pay__c, Milestone_Date__c,
-            Minimum_Pay__c, Number_of_Candidates_related_to_this_Pos__c FROM Position__c WITH USER_MODE];
+            Minimum_Pay__c, Number_of_Candidates_related_to_this_Pos__c FROM Position__c WHERE Location_Name__c =: cityName WITH USER_MODE];
 
             if(!lstPositions.isEmpty()){
                 for(Position__c pos :lstPositions ){
