@@ -28,4 +28,13 @@ public with sharing class DatabaseUtility {
             }
         }
     }
+
+    /**
+         * @description Retrieves all User records and writes each one to the debug log.
+    */
+    public static void getUserRecords() {
+        for (User u : [SELECT Id, FirstName, LastName, Email, Username, Profile.Name, IsActive FROM User WITH USER_MODE]) {
+            System.debug('User Record is ' + u);
+        }
+    }
 }
