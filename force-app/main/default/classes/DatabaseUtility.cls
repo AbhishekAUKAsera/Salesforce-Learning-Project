@@ -140,4 +140,20 @@ public static void getContactsByIndustryName(String industryName) {
         }
     }
 }
+
+/**
+ * Retrieves a page of Account records ordered by Name.
+ *
+ * @param limitValue  Maximum number of Account records to return.
+ * @param offsetValue Number of records to skip before returning results.
+ */
+public static void getRecordsByLimits(Integer limitValue, Integer offsetValue) {
+    List<Account> accounts = [ SELECT Id, Name, Rating, Industry, AnnualRevenue, Active__c, Phone, Fax
+                               FROM Account ORDER BY Name LIMIT :limitValue OFFSET :offsetValue WITH USER_MODE];
+
+    for (Account acc : accounts) {
+        System.debug('Account Record is ' + acc);
     }
+}
+
+}
