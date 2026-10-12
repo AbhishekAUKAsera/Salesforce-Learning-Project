@@ -1,0 +1,111 @@
+:host {
+    display: block;
+}
+
+.intro {
+    color: #444;
+}
+
+.search-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+}
+
+.city-input {
+    flex: 1;
+}
+
+.search-button {
+    padding-bottom: 0.125rem;
+}
+
+.loading-state {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 2rem;
+    margin-top: 1rem;
+    padding-left: 2.5rem;
+    color: #444;
+}
+
+.weather-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.place-name {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.condition {
+    margin-top: 0.25rem;
+    color: #444;
+}
+
+.observed,
+.detail-label {
+    color: #5c5c5c;
+    font-size: 0.8125rem;
+}
+
+.temperature {
+    white-space: nowrap;
+    font-size: 2.5rem;
+    font-weight: 300;
+}
+
+.temperature span {
+    font-size: 1.25rem;
+}
+
+.weather-details {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 1rem;
+    border-top: 1px solid #dddbda;
+    border-bottom: 1px solid #dddbda;
+}
+
+.detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem;
+}
+
+.detail + .detail {
+    border-left: 1px solid #dddbda;
+}
+
+.weather-map {
+    display: block;
+    height: 22rem;
+}
+
+.error-message {
+    padding: 0.75rem;
+    border-left: 0.25rem solid #ba0517;
+    background: #fef1ee;
+    color: #8e030f;
+}
+
+@media (max-width: 30rem) {
+    .search-row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .search-button {
+        align-self: flex-start;
+    }
+
+    .detail {
+        padding: 0.5rem 0.25rem;
+    }
+}

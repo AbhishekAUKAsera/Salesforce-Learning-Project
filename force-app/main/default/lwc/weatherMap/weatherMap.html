@@ -1,0 +1,84 @@
+<template>
+    <lightning-card title="Weather Map" icon-name="utility:world">
+        <div class="slds-var-p-horizontal_medium slds-var-p-bottom_medium">
+            <p class="intro slds-var-m-bottom_medium">
+                Search a city to see its current weather and location.
+            </p>
+
+            <form onsubmit={handleSearch}>
+                <div class="search-row">
+                    <lightning-input
+                        class="city-input"
+                        type="search"
+                        label="City"
+                        value={city}
+                        onchange={handleCityChange}
+                        placeholder="For example, Seattle"
+                        maxlength="80"
+                        required
+                    ></lightning-input>
+                    <lightning-button
+                        class="search-button"
+                        type="submit"
+                        label="Search"
+                        variant="brand"
+                        disabled={isLoading}
+                    ></lightning-button>
+                </div>
+            </form>
+
+            <template lwc:if={isLoading}>
+                <div class="loading-state" role="status">
+                    <lightning-spinner
+                        alternative-text="Loading weather"
+                        size="small"
+                    ></lightning-spinner>
+                    <span>Getting the latest weather...</span>
+                </div>
+            </template>
+
+            <template lwc:if={errorMessage}>
+                <div class="error-message slds-var-m-top_medium" role="alert">
+                    {errorMessage}
+                </div>
+            </template>
+
+            <template lwc:if={hasWeather}>
+                <section class="results slds-var-m-top_large" aria-label="Current weather">
+                    <div class="weather-summary">
+                        <div>
+                            <h2 class="place-name">{weather.placeName}</h2>
+                            <p class="condition">{weather.condition}</p>
+                            <p class="observed">As of {weather.observedAt}</p>
+                        </div>
+                        <div class="temperature" aria-label="Temperature">
+                            {weather.temperature}<span>{weather.temperatureUnit}</span>
+                        </div>
+                    </div>
+
+                    <div class="weather-details">
+                        <div class="detail">
+                            <span class="detail-label">Feels like</span>
+                            <span>{weather.feelsLike}{weather.temperatureUnit}</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Humidity</span>
+                            <span>{weather.humidity}%</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Wind</span>
+                            <span>{weather.windSpeed} {weather.windUnit}</span>
+                        </div>
+                    </div>
+
+                    <lightning-map
+                        class="weather-map slds-var-m-top_medium"
+                        map-markers={mapMarkers}
+                        zoom-level="10"
+                        list-view="hidden"
+                    ></lightning-map>
+                </section>
+            </template>
+        </div>
+    </lightning-card>
+</template>
