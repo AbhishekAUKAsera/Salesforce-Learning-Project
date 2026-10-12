@@ -22,6 +22,14 @@ public with sharing class MixedDmlExceptionTestClass {
             System.debug('User record updated successfully is ' + u);
         }
 
+        updateAccount();
+    }
+
+    /**
+     * @description Update the Annual Revenue of Account Record.
+     */
+    @Future()
+    public static void updateAccount(){
         List<Account> accounts = [
             SELECT Id, Name, Rating, AnnualRevenue
             FROM Account
