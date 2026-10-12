@@ -10,6 +10,17 @@ Do you want to deploy a set of changes, or create a self-contained application? 
 
 The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
 
+## Weather Map Lightning Web Component
+
+The `weatherMap` component searches for a city, displays current conditions, and places the city on a native Salesforce map. It uses the free Open-Meteo geocoding and forecast APIs; no API key is required.
+
+Before using the component, add these domains as **Trusted URLs** in Salesforce Setup (CSP Trusted Sites), with **Allow site for connect-src** enabled:
+
+- `https://geocoding-api.open-meteo.com`
+- `https://api.open-meteo.com`
+
+Deploy `force-app/main/default/lwc/weatherMap` and add **Weather Map** to a Lightning App, Home, or Record page in Lightning App Builder.
+
 ## Read All About It
 
 - [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
