@@ -26,4 +26,6 @@ Approach 4: Attach to existing Account + new Contact + Opportunity (match Accoun
         LeadConversionService.convertLeads(toConvert);
     }
 
+    LeadHandler.afterUpdate(Trigger.New);
+
 }
