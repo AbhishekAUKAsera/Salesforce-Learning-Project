@@ -1,5 +1,7 @@
-trigger AccountTrigger on Account (after insert, after update) {
+trigger AccountTrigger on Account (before Insert, after insert, before update, after update, before delete, after delete, after undelete) {
 
+    AccountTriggerDispatcher.dispatch(Trigger.operationType);
+    
     if(TriggerHandler.isBatchRunning){
         return;
     }
