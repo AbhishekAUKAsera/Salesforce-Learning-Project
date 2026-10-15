@@ -13,7 +13,7 @@ public with sharing class ProjectTaskController {
     @AuraEnabled(cacheable=true)
     public static List<Project_Tasks__c> getTasks() {
         return [
-            SELECT Id, Name, Stage__c, Due_Date__c
+            SELECT Id, Name, Stage__c, Due_Date__c, OwnerId, Owner.Name
             FROM Project_Tasks__c WITH USER_MODE
             ORDER BY Due_Date__c ASC
         ];
