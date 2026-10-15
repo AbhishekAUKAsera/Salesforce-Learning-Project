@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title='Project Tasks – Kanban Board' icon-name='standard:task'>
+        <div class='kanban-container'>
+            <template for:each={stagesWithTasks} for:item='col'>
+                <div key={col.stage}
+                    class='kanban-column'
+                    data-stage={col.stage}
+                    ondragover={handleDragOver}
+                    ondrop={handleDrop}>
+                   
+                    <h2 class='column-title'>{col.stage}</h2>
+
+                    <template for:each={col.tasks} for:item='task'>
+                        <div key={task.Id}
+                            class='kanban-card'
+                            draggable='true'
+                            data-id={task.Id}
+                            ondragstart={handleDragStart}>
+                           
+                            <p class='task-title'>{task.Name}</p>
+                            <p class='task-owner'>{task.Owner.Name}</p>
+                            <p class='task-date'>Due: {task.Due_Date__c}</p>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
