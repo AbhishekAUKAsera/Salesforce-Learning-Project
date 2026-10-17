@@ -1,0 +1,30 @@
+<template>
+    <div class="calculator" role="region" aria-label="Calculator">
+        <!-- Display -->
+        <div class="display">
+            <div class="expression" data-id="expression" aria-hidden="true">{expression}</div>
+            <div class={displayClass} data-id="display" role="status" aria-live="polite">
+                {formattedDisplay}
+            </div>
+        </div>
+
+        <!-- Keypad -->
+        <div class="keypad">
+            <template for:each={keys} for:item="key">
+                <button
+                    key={key.value}
+                    class={key.className}
+                    data-value={key.value}
+                    aria-label={key.ariaLabel}
+                    type="button"
+                    onclick={handleKeyPress}
+                >
+                    {key.label}
+                </button>
+            </template>
+        </div>
+
+        <!-- Keyboard hint -->
+        <p class="hint">Keyboard supported: digits, + − × ÷, Enter, Backspace, Esc, %</p>
+    </div>
+</template>

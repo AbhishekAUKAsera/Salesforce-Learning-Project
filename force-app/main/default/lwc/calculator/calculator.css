@@ -1,0 +1,117 @@
+:host {
+    display: block;
+    max-width: 360px;
+    margin: 0 auto;
+}
+
+.calculator {
+    background: linear-gradient(180deg, #23252d 0%, #1a1b21 100%);
+    border-radius: 1.5rem;
+    padding: 1.25rem;
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* ---------- Display ---------- */
+.display {
+    min-height: 7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 0.25rem;
+    padding: 1rem 1.25rem;
+    background: #101014;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.expression {
+    color: #8e8e93;
+    font-size: 0.95rem;
+    min-height: 1.25em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.display-value {
+    color: #f5f5f7;
+    font-size: 2.6rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: right;
+    word-break: break-all;
+    transition: font-size 0.15s ease;
+}
+
+.display-value--small {
+    font-size: 1.7rem;
+}
+
+.display-value--error {
+    color: #ff453a;
+    font-size: 2rem;
+}
+
+/* ---------- Keypad ---------- */
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.65rem;
+}
+
+.key {
+    height: 3.5rem;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: #f5f5f7;
+    cursor: pointer;
+    transition: filter 0.15s ease, transform 0.05s ease;
+}
+
+.key--digit {
+    background: #2c2c30;
+}
+
+.key--function {
+    background: #3a3a3f;
+    font-size: 1.15rem;
+}
+
+.key--operator,
+.key--equals {
+    background: #ff9f0a;
+    color: #ffffff;
+}
+
+.key--active {
+    background: #ffffff;
+    color: #ff9f0a;
+}
+
+.key:hover {
+    filter: brightness(1.15);
+}
+
+.key:active {
+    transform: scale(0.95);
+}
+
+.key:focus-visible {
+    outline: 2px solid #0a84ff;
+    outline-offset: 2px;
+}
+
+/* ---------- Footer hint ---------- */
+.hint {
+    margin: 0.9rem 0 0;
+    text-align: center;
+    color: #8e8e93;
+    font-size: 0.78rem;
+}
