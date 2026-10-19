@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Demo: a Screen Flow whose fields and text appear or hide based on earlier answers (Conditional Visibility). Choose Individual or Business and the form adapts. Pick Email or Phone and only the matching contact field shows.</description>
+    <interviewLabel>Customer Onboarding Demo {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Dynamic Screen Flow - Conditional Visibility Demo</label>
+    <processType>Flow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Customer_Details</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+
+    <!-- Choices used by the radio buttons and dropdown -->
+    <choices>
+        <name>Choice_Individual</name>
+        <choiceText>Individual</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Individual</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Business</name>
+        <choiceText>Business</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Business</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Email</name>
+        <choiceText>Email</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Email</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_Phone</name>
+        <choiceText>Phone</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Phone</stringValue>
+        </value>
+    </choices>
+
+    <!-- Screen 1: the form that changes as the user answers -->
+    <screens>
+        <name>Customer_Details</name>
+        <label>Customer Details</label>
+        <locationX>50</locationX>
+        <locationY>200</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Summary</targetReference>
+        </connector>
+        <fields>
+            <name>Intro_Text</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Step 1:&lt;/b&gt; Tell us about yourself. The questions below change based on your answers.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+
+        <!-- Controlling field: always visible -->
+        <fields>
+            <name>customerType</name>
+            <choiceReferences>Choice_Individual</choiceReferences>
+            <choiceReferences>Choice_Business</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Customer Type</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+
+        <!-- Shown only when customerType = Individual -->
+        <fields>
+            <name>Individual_Message</name>
+            <fieldText>&lt;p&gt;We will create a personal profile for you.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>customerType</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Individual</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>firstName</name>
+            <dataType>String</dataType>
+            <fieldText>First Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>customerType</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Individual</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>lastName</name>
+            <dataType>String</dataType>
+            <fieldText>Last Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>customerType</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Individual</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>dateOfBirth</name>
+            <dataType>Date</dataType>
+            <fieldText>Date of Birth</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>customerType</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Individual</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+
+        <!-- Shown only when customerType = Business -->
+        <fields>
+            <name>Business_Message</name>
+            <fieldText>&lt;p&gt;We will create a company account and ask for tax details.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>customerType</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Business</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>companyName</name>
+            <dataType>String</dataType>
+            <fieldText>Company Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>customerType</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Business</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>taxId</name>
+            <dataType>String</dataType>
+            <fieldText>Tax ID (GSTIN / EIN)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>customerType</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Business</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+
+        <!-- Contact preference: appears once a customer type is chosen -->
+        <fields>
+            <name>contactMethod</name>
+            <choiceReferences>Choice_Email</choiceReferences>
+            <choiceReferences>Choice_Phone</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Preferred Contact Method</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>customerType</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+
+        <!-- Nested conditional: shown only when contactMethod = Email -->
+        <fields>
+            <name>email</name>
+            <dataType>String</dataType>
+            <fieldText>Email Address</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>contactMethod</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Email</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+
+        <!-- Nested conditional: shown only when contactMethod = Phone -->
+        <fields>
+            <name>phone</name>
+            <dataType>String</dataType>
+            <fieldText>Phone Number</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>contactMethod</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Phone</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- Screen 2: summary, with lines that only appear for the relevant path -->
+    <screens>
+        <name>Summary</name>
+        <label>Summary</label>
+        <locationX>50</locationX>
+        <locationY>400</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Summary_Heading</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Step 2: Review your details&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Summary_Type</name>
+            <fieldText>&lt;p&gt;Customer type: {!customerType}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Summary_Individual</name>
+            <fieldText>&lt;p&gt;Name: {!firstName} {!lastName}&lt;/p&gt;&lt;p&gt;Date of birth: {!dateOfBirth}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>customerType</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Individual</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Summary_Business</name>
+            <fieldText>&lt;p&gt;Company: {!companyName}&lt;/p&gt;&lt;p&gt;Tax ID: {!taxId}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>customerType</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Business</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Summary_Email</name>
+            <fieldText>&lt;p&gt;We will contact you by email at {!email}.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>contactMethod</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Email</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Summary_Phone</name>
+            <fieldText>&lt;p&gt;We will call you at {!phone}.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>contactMethod</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Phone</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+</Flow>
