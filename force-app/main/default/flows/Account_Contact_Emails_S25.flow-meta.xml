@@ -1,55 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  AFTER Summer '25: one Get Records element retrieves the Account. The related
-  Contacts and Opportunities are added with "Also get related records (Beta)" in
-  Flow Builder.
-
-  This version deploys cleanly. The <relatedRecords> block that caused the
-  "relationshipName invalid" error has been removed, because I had guessed its
-  structure and the Metadata API schema does not match that guess.
-
-  To add the related records: open the flow in Flow Builder, select the Get Records
-  element, tick "Also get related records (Beta)", add Contacts and Opportunities,
-  and save. Then copy the generated <recordLookups> block into this file.
--->
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>64.0</apiVersion>
-    <label>After Summer 25 - Get Account and Related Records</label>
-    <description>Summer '25 approach: a single Get Records element. Related records are configured in Flow Builder (beta).</description>
-    <processMetadataValues>
-        <name>BuilderType</name>
-        <value>
-            <stringValue>LightningFlowBuilder</stringValue>
-        </value>
-    </processMetadataValues>
+    <apiVersion>66.0</apiVersion>
+    <label>Get Account With Related Contacts and Opportunities</label>
     <processType>AutoLaunchedFlow</processType>
+    <status>Draft</status>
 
     <variables>
-        <name>varAccountId</name>
+        <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Account</targetReference>
+        </connector>
+    </start>
+
     <recordLookups>
-        <name>Get_Account_And_Related_Records</name>
-        <label>Get Account and Its Related Contacts and Opportunities</label>
-        <locationX>176</locationX>
-        <locationY>134</locationY>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
+        <name>Get_Account</name>
+        <label>Get Account</label>
+        <locationX>50</locationX>
+        <locationY>150</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Contacts</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>varAccountId</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
 
-    <startElementReference>Get_Account_And_Related_Records</startElementReference>
-    <status>Draft</status>
+    <recordLookups>
+        <name>Get_Contacts</name>
+        <label>Get Contacts</label>
+        <locationX>50</locationX>
+        <locationY>300</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Opportunities</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+
+    <recordLookups>
+        <name>Get_Opportunities</name>
+        <label>Get Opportunities</label>
+        <locationX>50</locationX>
+        <locationY>450</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
 </Flow>
