@@ -14,7 +14,6 @@
     </start>
     <status>Draft</status>
 
-    <!-- Choices used by the radio buttons and dropdown -->
     <choices>
         <name>Choice_Individual</name>
         <choiceText>Individual</choiceText>
@@ -48,7 +47,6 @@
         </value>
     </choices>
 
-    <!-- Screen 1: the form that changes as the user answers -->
     <screens>
         <name>Customer_Details</name>
         <label>Customer Details</label>
@@ -66,7 +64,6 @@
             <fieldType>DisplayText</fieldType>
         </fields>
 
-        <!-- Controlling field: always visible -->
         <fields>
             <name>customerType</name>
             <choiceReferences>Choice_Individual</choiceReferences>
@@ -75,10 +72,8 @@
             <fieldText>Customer Type</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
 
-        <!-- Shown only when customerType = Individual -->
         <fields>
             <name>Individual_Message</name>
             <fieldText>&lt;p&gt;We will create a personal profile for you.&lt;/p&gt;</fieldText>
@@ -100,7 +95,6 @@
             <fieldText>First Name</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -118,7 +112,6 @@
             <fieldText>Last Name</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -136,7 +129,6 @@
             <fieldText>Date of Birth</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -149,7 +141,6 @@
             </visibilityRule>
         </fields>
 
-        <!-- Shown only when customerType = Business -->
         <fields>
             <name>Business_Message</name>
             <fieldText>&lt;p&gt;We will create a company account and ask for tax details.&lt;/p&gt;</fieldText>
@@ -171,7 +162,6 @@
             <fieldText>Company Name</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -189,7 +179,6 @@
             <fieldText>Tax ID (GSTIN / EIN)</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -202,7 +191,6 @@
             </visibilityRule>
         </fields>
 
-        <!-- Contact preference: appears once a customer type is chosen -->
         <fields>
             <name>contactMethod</name>
             <choiceReferences>Choice_Email</choiceReferences>
@@ -211,27 +199,14 @@
             <fieldText>Preferred Contact Method</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>customerType</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
 
-        <!-- Nested conditional: shown only when contactMethod = Email -->
         <fields>
             <name>email</name>
             <dataType>String</dataType>
             <fieldText>Email Address</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -243,15 +218,12 @@
                 </conditions>
             </visibilityRule>
         </fields>
-
-        <!-- Nested conditional: shown only when contactMethod = Phone -->
         <fields>
             <name>phone</name>
             <dataType>String</dataType>
             <fieldText>Phone Number</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -267,7 +239,6 @@
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- Screen 2: summary, with lines that only appear for the relevant path -->
     <screens>
         <name>Summary</name>
         <label>Summary</label>

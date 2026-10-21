@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <description>Summer '25 and later: one Get Records element returns the Account with its Contacts, then a loop builds a semicolon-separated email list.</description>
+    <environments>Default</environments>
+    <interviewLabel>Account Contact Emails (S25) {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account Contact Emails - S25</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value><stringValue>LightningFlowBuilder</stringValue></value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <status>Draft</status>
+
+    <!-- Input -->
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <!-- Output -->
+    <variables>
+        <name>emailList</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value><stringValue></stringValue></value>
+    </variables>
+
+    <!-- Single Get Records: Account + Contacts -->
+    <recordLookups>
+        <name>Get_Account_With_Contacts</name>
+        <label>Get Account with Contacts</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_Contacts</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value><elementReference>recordId</elementReference></value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <!-- VERIFY: the child relationship block below is the part I could not
+             confirm for Summer '25. Build the element in Builder, then retrieve
+             the exact XML (see the next section) and replace this block. -->
+        <relatedRecords>
+            <relationshipName>Contacts</relationshipName>
+            <queriedFields>Id</queriedFields>
+            <queriedFields>Email</queriedFields>
+            <queriedFields>FirstName</queriedFields>
+            <queriedFields>LastName</queriedFields>
+        </relatedRecords>
+    </recordLookups>
+
+    <!-- Loop over the Contacts child collection -->
+    <loops>
+        <name>Loop_Contacts</name>
+        <label>Loop Contacts</label>
+        <locationX>176</locationX>
+        <locationY>254</locationY>
+        <collectionReference>Get_Account_With_Contacts.Contacts</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Has_Email</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Final_Output</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+
+    <!-- Skip blank emails -->
+    <decisions>
+        <name>Has_Email</name>
+        <label>Has Email?</label>
+        <locationX>176</locationX>
+        <locationY>374</locationY>
+        <defaultConnector>
+            <targetReference>Loop_Contacts</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Email_Not_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_Contacts.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue><booleanValue>false</booleanValue></rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_To_List</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+
+    <!-- Append email to list -->
+    <assignments>
+        <name>Add_To_List</name>
+        <label>Add to List</label>
+        <locationX>44</locationX>
+        <locationY>494</locationY>
+        <assignmentItems>
+            <assignToReference>emailList</assignToReference>
+            <operator>Add</operator>
+            <value><elementReference>Loop_Contacts.Email</elementReference></value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Contacts</targetReference>
+        </connector>
+    </assignments>
+
+    <!-- Finish -->
+    <assignments>
+        <name>Final_Output</name>
+        <label>Final Output</label>
+        <locationX>176</locationX>
+        <locationY>614</locationY>
+        <assignmentItems>
+            <assignToReference>emailList</assignToReference>
+            <operator>Assign</operator>
+            <value><elementReference>emailList</elementReference></value>
+        </assignmentItems>
+    </assignments>
+
+    <start>
+        <locationX>176</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Account_With_Contacts</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+</Flow>
