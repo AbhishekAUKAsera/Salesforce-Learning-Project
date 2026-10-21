@@ -112,29 +112,3 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Add_To_List</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-
-    <!-- Store the appended list, then go back to the loop -->
-    <assignments>
-        <name>Add_To_List</name>
-        <label>Add to List</label>
-        <locationX>44</locationX>
-        <locationY>494</locationY>
-        <assignmentItems>
-            <assignToReference>emailList</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>appendEmail</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Contacts</targetReference>
-        </connector>
-    </assignments>
-
-    <status>Draft</status>
-</Flow>
