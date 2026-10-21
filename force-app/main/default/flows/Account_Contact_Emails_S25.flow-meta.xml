@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AFTER Summer '25: one Get Records element retrieves the Account. The related
+  Contacts and Opportunities are added with "Also get related records (Beta)" in
+  Flow Builder.
+
+  This version deploys cleanly. The <relatedRecords> block that caused the
+  "relationshipName invalid" error has been removed, because I had guessed its
+  structure and the Metadata API schema does not match that guess.
+
+  To add the related records: open the flow in Flow Builder, select the Get Records
+  element, tick "Also get related records (Beta)", add Contacts and Opportunities,
+  and save. Then copy the generated <recordLookups> block into this file.
+-->
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>64.0</apiVersion>
-    <description>Builds a semicolon-separated list of email addresses for all Contacts of an Account.</description>
-    <environments>Default</environments>
-    <interviewLabel>Account Contact Emails - S25 {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Account Contact Emails - S25</label>
+    <label>After Summer 25 - Get Account and Related Records</label>
+    <description>Summer '25 approach: a single Get Records element. Related records are configured in Flow Builder (beta).</description>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -12,103 +23,33 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <status>Draft</status>
 
-    <!-- Start -->
-    <start>
-        <locationX>176</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Account_Contacts</targetReference>
-        </connector>
-    </start>
-
-    <!-- Input: Account Id -->
     <variables>
-        <name>recordId</name>
+        <name>varAccountId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 
-    <!-- Output: semicolon-separated email list -->
-    <variables>
-        <name>emailList</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-        <value>
-            <stringValue></stringValue>
-        </value>
-    </variables>
-
-    <!-- Formula: appends the current Contact's email to the list -->
-    <formulas>
-        <name>appendEmail</name>
-        <dataType>String</dataType>
-        <expression>IF(ISBLANK({!emailList}), {!Loop_Contacts.Email}, {!emailList} &amp; ";" &amp; {!Loop_Contacts.Email})</expression>
-    </formulas>
-
-    <!-- Get all Contacts whose AccountId = the input record -->
     <recordLookups>
-        <name>Get_Account_Contacts</name>
-        <label>Get Account Contacts</label>
+        <name>Get_Account_And_Related_Records</name>
+        <label>Get Account and Its Related Contacts and Opportunities</label>
         <locationX>176</locationX>
         <locationY>134</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Loop_Contacts</targetReference>
-        </connector>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>AccountId</field>
+            <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>varAccountId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>Contact</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Email</queriedFields>
-        <queriedFields>FirstName</queriedFields>
-        <queriedFields>LastName</queriedFields>
     </recordLookups>
 
-    <!-- Loop over the Contacts -->
-    <loops>
-        <name>Loop_Contacts</name>
-        <label>Loop Contacts</label>
-        <locationX>176</locationX>
-        <locationY>254</locationY>
-        <collectionReference>Get_Account_Contacts</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Has_Email</targetReference>
-        </nextValueConnector>
-    </loops>
-
-    <!-- Skip Contacts with a blank Email -->
-    <decisions>
-        <name>Has_Email</name>
-        <label>Has Email?</label>
-        <locationX>176</locationX>
-        <locationY>374</locationY>
-        <defaultConnector>
-            <targetReference>Loop_Contacts</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Email_Not_Blank</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_Contacts.Email</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
+    <startElementReference>Get_Account_And_Related_Records</startElementReference>
+    <status>Draft</status>
+</Flow>

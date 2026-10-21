@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  BEFORE Summer '25: to get an Account with its related Contacts and Opportunities,
+  the flow needs a separate Get Records element for each child object.
+  Each lookup is one more element to build, maintain, and debug.
+-->
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>62.0</apiVersion>
-    <description>Before Summer '25: two Get Records elements plus a loop build a semicolon-separated email list for an Account's Contacts.</description>
-    <environments>Default</environments>
-    <interviewLabel>Account Contact Emails (Before S25) {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Account Contact Emails - Before S25</label>
+    <apiVersion>64.0</apiVersion>
+    <label>Before Summer 25 - Get Account and Related Records</label>
+    <description>Pre-Summer '25 approach: one Get Records element for the Account, plus a separate Get Records element for each related object.</description>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -13,185 +16,77 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
 
-    <!-- Input -->
     <variables>
-        <name>recordId</name>
+        <name>varAccountId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 
-    <!-- Output -->
-    <variables>
-        <name>emailList</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-
-    <!-- Working variables -->
-    <variables>
-        <name>colContacts</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Contact</objectType>
-    </variables>
-
-    <!-- Formulas -->
-    <!-- Appends the current contact's email plus a semicolon to the running list -->
-    <formulas>
-        <name>appendEmail</name>
-        <dataType>String</dataType>
-        <expression>{!emailList} &amp; {!Loop_Contacts.Email} &amp; ";"</expression>
-    </formulas>
-
-    <!-- Removes the trailing semicolon from the finished list -->
-    <formulas>
-        <name>trimmedEmailList</name>
-        <dataType>String</dataType>
-        <expression>IF(LEN({!emailList}) &gt; 0, LEFT({!emailList}, LEN({!emailList}) - 1), "")</expression>
-    </formulas>
-
-    <!-- Get Records #1: Account -->
+    <!-- Lookup 1 of 3: the Account -->
     <recordLookups>
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>176</locationX>
         <locationY>134</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Contacts</targetReference>
+            <targetReference>Get_Related_Contacts</targetReference>
         </connector>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>varAccountId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
     </recordLookups>
 
-    <!-- Get Records #2: Contacts (separate query) -->
+    <!-- Lookup 2 of 3: Contacts related to the Account -->
     <recordLookups>
-        <name>Get_Contacts</name>
-        <label>Get Contacts</label>
+        <name>Get_Related_Contacts</name>
+        <label>Get Related Contacts</label>
         <locationX>176</locationX>
         <locationY>254</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_Contacts</targetReference>
+            <targetReference>Get_Related_Opportunities</targetReference>
         </connector>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Contact</object>
         <filterLogic>and</filterLogic>
         <filters>
             <field>AccountId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>Get_Account.Id</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>Contact</object>
-        <outputReference>colContacts</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Email</queriedFields>
-        <queriedFields>FirstName</queriedFields>
-        <queriedFields>LastName</queriedFields>
-        <storeOutputAutomatically>false</storeOutputAutomatically>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
 
-    <!-- Loop over Contacts -->
-    <loops>
-        <name>Loop_Contacts</name>
-        <label>Loop Contacts</label>
+    <!-- Lookup 3 of 3: Opportunities related to the Account -->
+    <recordLookups>
+        <name>Get_Related_Opportunities</name>
+        <label>Get Related Opportunities</label>
         <locationX>176</locationX>
         <locationY>374</locationY>
-        <collectionReference>colContacts</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Has_Email</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Final_Output</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-
-    <!-- Skip blank emails -->
-    <decisions>
-        <name>Has_Email</name>
-        <label>Has Email?</label>
-        <locationX>176</locationX>
-        <locationY>494</locationY>
-        <defaultConnector>
-            <targetReference>Loop_Contacts</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Email_Not_Blank</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_Contacts.Email</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Add_To_List</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-
-    <!-- Append email (with separator) to list -->
-    <assignments>
-        <name>Add_To_List</name>
-        <label>Add to List</label>
-        <locationX>44</locationX>
-        <locationY>614</locationY>
-        <assignmentItems>
-            <assignToReference>emailList</assignToReference>
-            <operator>Assign</operator>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
             <value>
-                <elementReference>appendEmail</elementReference>
+                <elementReference>Get_Account.Id</elementReference>
             </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Contacts</targetReference>
-        </connector>
-    </assignments>
+        </filters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
 
-    <!-- Finish: strip trailing semicolon -->
-    <assignments>
-        <name>Final_Output</name>
-        <label>Final Output</label>
-        <locationX>176</locationX>
-        <locationY>734</locationY>
-        <assignmentItems>
-            <assignToReference>emailList</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>trimmedEmailList</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
-
-    <start>
-        <locationX>176</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Account</targetReference>
-        </connector>
-    </start>
-
+    <startElementReference>Get_Account</startElementReference>
     <status>Draft</status>
 </Flow>
