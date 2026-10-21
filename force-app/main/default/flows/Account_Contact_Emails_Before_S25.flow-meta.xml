@@ -7,10 +7,11 @@
     <label>Account Contact Emails - Before S25</label>
     <processMetadataValues>
         <name>BuilderType</name>
-        <value><stringValue>LightningFlowBuilder</stringValue></value>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <status>Draft</status>
 
     <!-- Input -->
     <variables>
@@ -28,7 +29,6 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
-        <value><stringValue></stringValue></value>
     </variables>
 
     <!-- Working variables -->
@@ -40,6 +40,21 @@
         <isOutput>false</isOutput>
         <objectType>Contact</objectType>
     </variables>
+
+    <!-- Formulas -->
+    <!-- Appends the current contact's email plus a semicolon to the running list -->
+    <formulas>
+        <name>appendEmail</name>
+        <dataType>String</dataType>
+        <expression>{!emailList} &amp; {!Loop_Contacts.Email} &amp; ";"</expression>
+    </formulas>
+
+    <!-- Removes the trailing semicolon from the finished list -->
+    <formulas>
+        <name>trimmedEmailList</name>
+        <dataType>String</dataType>
+        <expression>IF(LEN({!emailList}) &gt; 0, LEFT({!emailList}, LEN({!emailList}) - 1), "")</expression>
+    </formulas>
 
     <!-- Get Records #1: Account -->
     <recordLookups>
@@ -55,7 +70,9 @@
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
-            <value><elementReference>recordId</elementReference></value>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
@@ -78,7 +95,9 @@
         <filters>
             <field>AccountId</field>
             <operator>EqualTo</operator>
-            <value><elementReference>recordId</elementReference></value>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Contact</object>
@@ -122,7 +141,9 @@
             <conditions>
                 <leftValueReference>Loop_Contacts.Email</leftValueReference>
                 <operator>IsNull</operator>
-                <rightValue><booleanValue>false</booleanValue></rightValue>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
             </conditions>
             <connector>
                 <targetReference>Add_To_List</targetReference>
@@ -131,7 +152,7 @@
         </rules>
     </decisions>
 
-    <!-- Append email to list -->
+    <!-- Append email (with separator) to list -->
     <assignments>
         <name>Add_To_List</name>
         <label>Add to List</label>
@@ -139,15 +160,17 @@
         <locationY>614</locationY>
         <assignmentItems>
             <assignToReference>emailList</assignToReference>
-            <operator>Add</operator>
-            <value><elementReference>Loop_Contacts.Email</elementReference></value>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>appendEmail</elementReference>
+            </value>
         </assignmentItems>
         <connector>
             <targetReference>Loop_Contacts</targetReference>
         </connector>
     </assignments>
 
-    <!-- Finish -->
+    <!-- Finish: strip trailing semicolon -->
     <assignments>
         <name>Final_Output</name>
         <label>Final Output</label>
@@ -156,7 +179,9 @@
         <assignmentItems>
             <assignToReference>emailList</assignToReference>
             <operator>Assign</operator>
-            <value><elementReference>emailList</elementReference></value>
+            <value>
+                <elementReference>trimmedEmailList</elementReference>
+            </value>
         </assignmentItems>
     </assignments>
 
@@ -167,5 +192,6 @@
             <targetReference>Get_Account</targetReference>
         </connector>
     </start>
+
     <status>Draft</status>
 </Flow>
