@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Flow: Create Contact With Duplicate Check
+  Summer '24 feature: Create Records > "Check for Matching Records" (Email field)
+  Action on match: Update (most recently updated match) or Skip.
+
+  Note: The duplicate-matching settings are stored by Salesforce on the
+  recordCreates element when you configure them in Flow Builder. For an exact
+  match of your org's metadata, build the flow once in Flow Builder, then run
+  "sf project retrieve start--><!--metadata Flow:Create_Contact_With_Duplicate_Check"
+  and use the retrieved file.-->
+
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <interviewLabel>Create Contact With Duplicate Check {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Contact With Duplicate Check</label>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <connector>
+            <targetReference>Create_or_Update_Contact</targetReference>
+        </connector>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <name>varFirstName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varLastName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <recordCreates>
+        <name>Create_or_Update_Contact</name>
+        <label>Create or Update Contact</label>
+        <locationX>50</locationX>
+        <locationY>200</locationY>
+        <inputAssignments>
+            <field>FirstName</field>
+            <value>
+                <elementReference>varFirstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LastName</field>
+            <value>
+                <elementReference>varLastName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email</field>
+            <value>
+                <elementReference>varEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+</Flow>
