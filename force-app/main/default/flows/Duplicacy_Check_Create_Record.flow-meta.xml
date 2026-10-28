@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Creates a Contact and runs the matching-records (duplicate) check before saving. If a duplicate is found, the Create Records element fails and the fault path is followed.</description>
+    <environments>Default</environments>
+    <interviewLabel>Duplicacy Check Create Record {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Duplicacy Check Create Record</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_Contact_With_Duplicate_Check</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+
+    <variables>
+        <name>varFirstName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varLastName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <recordCreates>
+        <name>Create_Contact_With_Duplicate_Check</name>
+        <label>Create Contact (Check for Matching Records)</label>
+        <locationX>50</locationX>
+        <locationY>200</locationY>
+        <connector>
+            <targetReference>Success_Screen_Placeholder</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Duplicate_Or_Error_Handler</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>FirstName</field>
+            <value>
+                <elementReference>varFirstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LastName</field>
+            <value>
+                <elementReference>varLastName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email</field>
+            <value>
+                <elementReference>varEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <!-- Toggle: "Check for matching records" enabled.
+             The exact processMetadataValues key used by Flow Builder for this toggle
+             can vary by API version. Save the flow once with the toggle on in Flow Builder
+             and compare the generated XML if this key needs adjusting. -->
+        <processMetadataValues>
+            <name>duplicateRuleCheck</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>dmlType</name>
+            <value>
+                <stringValue>CREATE</stringValue>
+            </value>
+        </processMetadataValues>
+    </recordCreates>
+
+    <screens>
+        <name>Success_Screen_Placeholder</name>
+        <label>Contact Created</label>
+        <locationX>50</locationX>
+        <locationY>400</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Duplicate_Or_Error_Handler</name>
+        <label>Duplicate Contact Found</label>
+        <locationX>250</locationX>
+        <locationY>400</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Duplicate_Message</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;A matching Contact already exists. The record was not created.&lt;/p&gt;</fieldText>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+</Flow>
