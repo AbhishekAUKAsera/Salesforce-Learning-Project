@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Mass updates Opportunities still in Prospecting after their Close Date has passed, moving them to Closed Lost.</description>
+    <interviewLabel>Mass Update Stale Opportunities {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Mass Update Stale Opportunities</label>
+    <processType>AutoLaunchedFlow</processType>
+    <status>Draft</status>
+
+    <variables>
+        <name>oppsToCheck</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+    <variables>
+        <name>oppsToUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+    <variables>
+        <name>loopOpp</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Stale_Opportunities</targetReference>
+        </connector>
+    </start>
+
+    <recordLookups>
+        <name>Get_Stale_Opportunities</name>
+        <label>Get Stale Opportunities</label>
+        <locationX>50</locationX>
+        <locationY>150</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_Opportunities</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Prospecting</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CloseDate</field>
+            <operator>LessThan</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <outputReference>oppsToCheck</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>StageName</queriedFields>
+        <queriedFields>Description</queriedFields>
+    </recordLookups>
+
+    <loops>
+        <name>Loop_Opportunities</name>
+        <label>Loop Opportunities</label>
+        <locationX>50</locationX>
+        <locationY>300</locationY>
+        <assignNextValueToReference>loopOpp</assignNextValueToReference>
+        <collectionReference>oppsToCheck</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Set_Closed_Lost</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Opportunities</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+
+    <assignments>
+        <name>Set_Closed_Lost</name>
+        <label>Set Closed Lost</label>
+        <locationX>50</locationX>
+        <locationY>450</locationY>
+        <assignmentItems>
+            <assignToReference>loopOpp.StageName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>loopOpp.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Auto-closed by mass update flow</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>oppsToUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>loopOpp</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Opportunities</targetReference>
+        </connector>
+    </assignments>
+
+    <recordUpdates>
+        <name>Update_Opportunities</name>
+        <label>Update Opportunities</label>
+        <locationX>50</locationX>
+        <locationY>650</locationY>
+        <inputReference>oppsToUpdate</inputReference>
+    </recordUpdates>
+</Flow>
