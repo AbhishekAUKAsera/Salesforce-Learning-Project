@@ -1,342 +1,389 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
-    <description>Demo: Building Menu Systems with Radio Choice Components. This flow shows how to create dynamic, multi-level menus where user selections control navigation and content visibility using Radio Buttons and conditional visibility rules.</description>
-    <interviewLabel>Menu Demo {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Menu Demo - Radio Choice Components</label>
-    <processType>Flow</processType>
-    <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Main_Menu</targetReference>
-        </connector>
-    </start>
-    <status>Draft</status>
 
-    <!-- ============================================================
-         CHOICE DEFINITIONS - Main Menu Options
-         ============================================================ -->
+    <assignments>
+        <name>Set_Sales_Selection</name>
+        <label>Set Sales Feature</label>
+        <locationX>50</locationX>
+        <locationY>450</locationY>
+        <connector><targetReference>Action_Menu</targetReference></connector>
+        <assignmentItems>
+            <assignToReference>subMenuSelection</assignToReference>
+            <operator>Assign</operator>
+            <value><elementReference>salesSubMenu</elementReference></value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Service_Selection</name>
+        <label>Set Service Feature</label>
+        <locationX>170</locationX>
+        <locationY>450</locationY>
+        <connector><targetReference>Action_Menu</targetReference></connector>
+        <assignmentItems>
+            <assignToReference>subMenuSelection</assignToReference>
+            <operator>Assign</operator>
+            <value><elementReference>serviceSubMenu</elementReference></value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Marketing_Selection</name>
+        <label>Set Marketing Feature</label>
+        <locationX>290</locationX>
+        <locationY>450</locationY>
+        <connector><targetReference>Action_Menu</targetReference></connector>
+        <assignmentItems>
+            <assignToReference>subMenuSelection</assignToReference>
+            <operator>Assign</operator>
+            <value><elementReference>marketingSubMenu</elementReference></value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Analytics_Selection</name>
+        <label>Set Analytics Feature</label>
+        <locationX>410</locationX>
+        <locationY>450</locationY>
+        <connector><targetReference>Action_Menu</targetReference></connector>
+        <assignmentItems>
+            <assignToReference>subMenuSelection</assignToReference>
+            <operator>Assign</operator>
+            <value><elementReference>analyticsSubMenu</elementReference></value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Settings_Selection</name>
+        <label>Set Settings Feature</label>
+        <locationX>530</locationX>
+        <locationY>450</locationY>
+        <connector><targetReference>Action_Menu</targetReference></connector>
+        <assignmentItems>
+            <assignToReference>subMenuSelection</assignToReference>
+            <operator>Assign</operator>
+            <value><elementReference>settingsSubMenu</elementReference></value>
+        </assignmentItems>
+    </assignments>
+
     <choices>
         <name>Choice_Sales</name>
-        <choiceText>[Sales] Sales</choiceText>
+        <choiceText>Sales</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Sales</stringValue>
-        </value>
+        <value><stringValue>Sales</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Service</name>
-        <choiceText>[Service] Service</choiceText>
+        <choiceText>Service</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Service</stringValue>
-        </value>
+        <value><stringValue>Service</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Marketing</name>
-        <choiceText>[Marketing] Marketing</choiceText>
+        <choiceText>Marketing</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Marketing</stringValue>
-        </value>
+        <value><stringValue>Marketing</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Analytics</name>
-        <choiceText>[Analytics] Analytics</choiceText>
+        <choiceText>Analytics</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Analytics</stringValue>
-        </value>
+        <value><stringValue>Analytics</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Settings</name>
-        <choiceText>[Settings] Settings</choiceText>
+        <choiceText>Settings</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Settings</stringValue>
-        </value>
+        <value><stringValue>Settings</stringValue></value>
     </choices>
 
-    <!-- ============================================================
-         CHOICE DEFINITIONS - Sales Sub-Menu
-         ============================================================ -->
     <choices>
         <name>Choice_Sales_Leads</name>
         <choiceText>Leads Management</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Leads</stringValue>
-        </value>
+        <value><stringValue>Leads</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Sales_Opportunities</name>
         <choiceText>Opportunities</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Opportunities</stringValue>
-        </value>
+        <value><stringValue>Opportunities</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Sales_Accounts</name>
         <choiceText>Accounts and Contacts</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Accounts</stringValue>
-        </value>
+        <value><stringValue>Accounts</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Sales_Forecast</name>
         <choiceText>Forecasting</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Forecast</stringValue>
-        </value>
+        <value><stringValue>Forecast</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Sales_Quotes</name>
         <choiceText>Quotes and Orders</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Quotes</stringValue>
-        </value>
+        <value><stringValue>Quotes</stringValue></value>
     </choices>
 
-    <!-- ============================================================
-         CHOICE DEFINITIONS - Service Sub-Menu
-         ============================================================ -->
     <choices>
         <name>Choice_Service_Cases</name>
         <choiceText>Case Management</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Cases</stringValue>
-        </value>
+        <value><stringValue>Cases</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Service_Knowledge</name>
         <choiceText>Knowledge Base</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Knowledge</stringValue>
-        </value>
+        <value><stringValue>Knowledge</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Service_Console</name>
         <choiceText>Service Console</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Console</stringValue>
-        </value>
+        <value><stringValue>Console</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Service_Chat</name>
         <choiceText>Live Chat and Bot</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Chat</stringValue>
-        </value>
+        <value><stringValue>Chat</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Service_SLA</name>
         <choiceText>SLAs and Entitlements</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>SLA</stringValue>
-        </value>
+        <value><stringValue>SLA</stringValue></value>
     </choices>
 
-    <!-- ============================================================
-         CHOICE DEFINITIONS - Marketing Sub-Menu
-         ============================================================ -->
     <choices>
         <name>Choice_Marketing_Campaigns</name>
         <choiceText>Campaigns</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Campaigns</stringValue>
-        </value>
+        <value><stringValue>Campaigns</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Marketing_Journeys</name>
         <choiceText>Customer Journeys</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Journeys</stringValue>
-        </value>
+        <value><stringValue>Journeys</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Marketing_Email</name>
         <choiceText>Email Studio</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Email</stringValue>
-        </value>
+        <value><stringValue>Email</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Marketing_Social</name>
         <choiceText>Social Studio</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Social</stringValue>
-        </value>
+        <value><stringValue>Social</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Marketing_Advertising</name>
         <choiceText>Advertising</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Advertising</stringValue>
-        </value>
+        <value><stringValue>Advertising</stringValue></value>
     </choices>
 
-    <!-- ============================================================
-         CHOICE DEFINITIONS - Analytics Sub-Menu
-         ============================================================ -->
     <choices>
         <name>Choice_Analytics_Dashboards</name>
         <choiceText>Dashboards</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Dashboards</stringValue>
-        </value>
+        <value><stringValue>Dashboards</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Analytics_Reports</name>
         <choiceText>Reports</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Reports</stringValue>
-        </value>
+        <value><stringValue>Reports</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Analytics_Einstein</name>
         <choiceText>Einstein Discovery</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Einstein</stringValue>
-        </value>
+        <value><stringValue>Einstein</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Analytics_Tableau</name>
         <choiceText>Tableau CRM</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Tableau</stringValue>
-        </value>
+        <value><stringValue>Tableau</stringValue></value>
     </choices>
 
-    <!-- ============================================================
-         CHOICE DEFINITIONS - Settings Sub-Menu
-         ============================================================ -->
     <choices>
         <name>Choice_Settings_Users</name>
         <choiceText>Users and Permissions</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Users</stringValue>
-        </value>
+        <value><stringValue>Users</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Settings_Profile</name>
         <choiceText>Profiles and Roles</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Profiles</stringValue>
-        </value>
+        <value><stringValue>Profiles</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Settings_Security</name>
         <choiceText>Security Controls</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Security</stringValue>
-        </value>
+        <value><stringValue>Security</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Settings_Data</name>
         <choiceText>Data Management</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Data</stringValue>
-        </value>
+        <value><stringValue>Data</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Settings_Automation</name>
-        <choiceText>Automation (Flow/Apex)</choiceText>
+        <choiceText>Automation(Flow/Apex)</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Automation</stringValue>
-        </value>
+        <value><stringValue>Automation</stringValue></value>
     </choices>
 
-    <!-- ============================================================
-         CHOICE DEFINITIONS - Action Selection (Third Level)
-         ============================================================ -->
     <choices>
         <name>Action_View</name>
         <choiceText>View Records</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>View</stringValue>
-        </value>
+        <value><stringValue>View</stringValue></value>
     </choices>
     <choices>
         <name>Action_Create</name>
         <choiceText>Create New</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Create</stringValue>
-        </value>
+        <value><stringValue>Create</stringValue></value>
     </choices>
     <choices>
         <name>Action_Edit</name>
         <choiceText>Edit and Update</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Edit</stringValue>
-        </value>
+        <value><stringValue>Edit</stringValue></value>
     </choices>
     <choices>
         <name>Action_Delete</name>
         <choiceText>Delete and Archive</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Delete</stringValue>
-        </value>
+        <value><stringValue>Delete</stringValue></value>
     </choices>
     <choices>
         <name>Action_Export</name>
         <choiceText>Export Data</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Export</stringValue>
-        </value>
+        <value><stringValue>Export</stringValue></value>
     </choices>
 
-    <!-- ============================================================
-         CHOICE DEFINITIONS - Confirmation
-         ============================================================ -->
     <choices>
         <name>Choice_Confirm_Yes</name>
         <choiceText>Yes, Proceed</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Yes</stringValue>
-        </value>
+        <value><stringValue>Yes</stringValue></value>
     </choices>
     <choices>
         <name>Choice_Confirm_No</name>
         <choiceText>No, Go Back</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>No</stringValue>
-        </value>
+        <value><stringValue>No</stringValue></value>
     </choices>
 
-    <!-- ============================================================
-         SCREEN 1: MAIN MENU
-         ============================================================ -->
+    <decisions>
+        <name>Route_Module</name>
+        <label>Route to Module Sub-Menu</label>
+        <locationX>50</locationX>
+        <locationY>200</locationY>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>Is_Sales</name>
+            <label>Sales</label>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>mainMenuSelection</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue><stringValue>Sales</stringValue></rightValue>
+            </conditions>
+            <connector><targetReference>Sub_Menu_Sales</targetReference></connector>
+        </rules>
+        <rules>
+            <name>Is_Service</name>
+            <label>Service</label>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>mainMenuSelection</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue><stringValue>Service</stringValue></rightValue>
+            </conditions>
+            <connector><targetReference>Sub_Menu_Service</targetReference></connector>
+        </rules>
+        <rules>
+            <name>Is_Marketing</name>
+            <label>Marketing</label>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>mainMenuSelection</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue><stringValue>Marketing</stringValue></rightValue>
+            </conditions>
+            <connector><targetReference>Sub_Menu_Marketing</targetReference></connector>
+        </rules>
+        <rules>
+            <name>Is_Analytics</name>
+            <label>Analytics</label>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>mainMenuSelection</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue><stringValue>Analytics</stringValue></rightValue>
+            </conditions>
+            <connector><targetReference>Sub_Menu_Analytics</targetReference></connector>
+        </rules>
+        <rules>
+            <name>Is_Settings</name>
+            <label>Settings</label>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>mainMenuSelection</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue><stringValue>Settings</stringValue></rightValue>
+            </conditions>
+            <connector><targetReference>Sub_Menu_Settings</targetReference></connector>
+        </rules>
+    </decisions>
+
+    <decisions>
+        <name>Route_Confirm</name>
+        <label>Route Confirmation</label>
+        <locationX>50</locationX>
+        <locationY>790</locationY>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>Do_Proceed</name>
+            <label>Yes - Proceed</label>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>confirmationChoice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue><stringValue>Yes</stringValue></rightValue>
+            </conditions>
+        </rules>
+        <rules>
+            <name>Go_Back</name>
+            <label>No - Back to Action Menu</label>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>confirmationChoice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue><stringValue>No</stringValue></rightValue>
+            </conditions>
+            <connector><targetReference>Action_Menu</targetReference></connector>
+        </rules>
+    </decisions>
+
+    <description>Demo: multi-level menu using Radio Button choice components with conditional visibility.</description>
+    <interviewLabel>Menu Demo {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Menu Demo - Radio Choice Components</label>
+    <processType>Flow</processType>
+
     <screens>
         <name>Main_Menu</name>
         <label>Main Menu</label>
@@ -345,14 +392,10 @@
         <allowBack>false</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Sub_Menu</targetReference>
-        </connector>
+        <connector><targetReference>Route_Module</targetReference></connector>
         <fields>
             <name>Header_Main</name>
-            <fieldText>Salesforce App Launcher - Menu Demo
-
-Select a module to explore its features</fieldText>
+            <fieldText>Salesforce App Launcher - Menu Demo</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -370,76 +413,66 @@ Select a module to explore its features</fieldText>
         </fields>
         <fields>
             <name>Info_Sales</name>
-            <fieldText>Sales - Leads, Opportunities, Accounts, Forecasting, Quotes</fieldText>
+            <fieldText>Leads, Opportunities, Accounts, Forecasting, Quotes</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>mainMenuSelection</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Sales</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Sales</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Info_Service</name>
-            <fieldText>Service - Cases, Knowledge, Console, Chat, SLAs</fieldText>
+            <fieldText>Cases, Knowledge, Console, Chat, SLAs</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>mainMenuSelection</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Service</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Service</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Info_Marketing</name>
-            <fieldText>Marketing - Campaigns, Journeys, Email, Social, Advertising</fieldText>
+            <fieldText>Campaigns, Journeys, Email, Social, Advertising</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>mainMenuSelection</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Marketing</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Marketing</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Info_Analytics</name>
-            <fieldText>Analytics - Dashboards, Reports, Einstein, Tableau CRM</fieldText>
+            <fieldText>Dashboards, Reports, Einstein, Tableau CRM</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>mainMenuSelection</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Analytics</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Analytics</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Info_Settings</name>
-            <fieldText>Settings - Users, Profiles, Security, Data, Automation</fieldText>
+            <fieldText>Users, Profiles, Security, Data, Automation</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>mainMenuSelection</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Settings</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Settings</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
@@ -447,29 +480,20 @@ Select a module to explore its features</fieldText>
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- ============================================================
-         SCREEN 2: SUB MENU (Dynamic based on Main Menu selection)
-         ============================================================ -->
     <screens>
-        <name>Sub_Menu</name>
-        <label>Sub Menu</label>
+        <name>Sub_Menu_Sales</name>
+        <label>Sales Sub Menu</label>
         <locationX>50</locationX>
-        <locationY>250</locationY>
+        <locationY>300</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Action_Menu</targetReference>
-        </connector>
+        <connector><targetReference>Set_Sales_Selection</targetReference></connector>
         <fields>
-            <name>Header_Sub</name>
-            <fieldText>{!mainMenuSelection} Module - Sub Menu
-
-Select a feature area within {!mainMenuSelection}</fieldText>
+            <name>Header_Sub_Sales</name>
+            <fieldText>Sales Module - Sub Menu</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-
-        <!-- SALES SUB-MENU -->
         <fields>
             <name>salesSubMenu</name>
             <choiceReferences>Choice_Sales_Leads</choiceReferences>
@@ -480,21 +504,93 @@ Select a feature area within {!mainMenuSelection}</fieldText>
             <dataType>String</dataType>
             <fieldText>Sales Features</fieldText>
             <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <helpText>Choose a Sales feature to manage</helpText>
+        </fields>
+        <fields>
+            <name>Sales_Desc_Leads</name>
+            <fieldText>Leads Management - Capture, qualify, and convert leads into opportunities.</fieldText>
+            <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>mainMenuSelection</leftValueReference>
+                    <leftValueReference>salesSubMenu</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Sales</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Leads</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>Sales_Desc_Opportunities</name>
+            <fieldText>Opportunities - Track deals through stages, forecast revenue, manage pipelines.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>salesSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Opportunities</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Sales_Desc_Accounts</name>
+            <fieldText>Accounts and Contacts - Manage customer accounts, contacts, and relationships.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>salesSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Accounts</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Sales_Desc_Forecast</name>
+            <fieldText>Forecasting - Predict revenue, set quotas, analyze pipeline health.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>salesSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Forecast</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Sales_Desc_Quotes</name>
+            <fieldText>Quotes and Orders - Generate quotes, manage orders, process contracts.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>salesSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Quotes</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
 
-        <!-- SERVICE SUB-MENU -->
+    <screens>
+        <name>Sub_Menu_Service</name>
+        <label>Service Sub Menu</label>
+        <locationX>170</locationX>
+        <locationY>300</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector><targetReference>Set_Service_Selection</targetReference></connector>
+        <fields>
+            <name>Header_Sub_Service</name>
+            <fieldText>Service Module - Sub Menu</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>serviceSubMenu</name>
             <choiceReferences>Choice_Service_Cases</choiceReferences>
@@ -505,21 +601,93 @@ Select a feature area within {!mainMenuSelection}</fieldText>
             <dataType>String</dataType>
             <fieldText>Service Features</fieldText>
             <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <helpText>Choose a Service feature to manage</helpText>
+        </fields>
+        <fields>
+            <name>Service_Desc_Cases</name>
+            <fieldText>Case Management - Log, track, and resolve customer issues efficiently.</fieldText>
+            <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>mainMenuSelection</leftValueReference>
+                    <leftValueReference>serviceSubMenu</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Service</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Cases</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>Service_Desc_Knowledge</name>
+            <fieldText>Knowledge Base - Create and manage articles for self-service support.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>serviceSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Knowledge</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Service_Desc_Console</name>
+            <fieldText>Service Console - Unified agent workspace for multi-channel support.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>serviceSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Console</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Service_Desc_Chat</name>
+            <fieldText>Live Chat and Bot - Real-time chat and Einstein Bot automation.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>serviceSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Chat</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Service_Desc_SLA</name>
+            <fieldText>SLAs and Entitlements - Define service levels, milestones, and entitlements.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>serviceSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>SLA</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
 
-        <!-- MARKETING SUB-MENU -->
+    <screens>
+        <name>Sub_Menu_Marketing</name>
+        <label>Marketing Sub Menu</label>
+        <locationX>290</locationX>
+        <locationY>300</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector><targetReference>Set_Marketing_Selection</targetReference></connector>
+        <fields>
+            <name>Header_Sub_Marketing</name>
+            <fieldText>Marketing Module - Sub Menu</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>marketingSubMenu</name>
             <choiceReferences>Choice_Marketing_Campaigns</choiceReferences>
@@ -530,21 +698,93 @@ Select a feature area within {!mainMenuSelection}</fieldText>
             <dataType>String</dataType>
             <fieldText>Marketing Features</fieldText>
             <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <helpText>Choose a Marketing feature to manage</helpText>
+        </fields>
+        <fields>
+            <name>Marketing_Desc_Campaigns</name>
+            <fieldText>Campaigns - Plan, execute, and measure marketing campaigns.</fieldText>
+            <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>mainMenuSelection</leftValueReference>
+                    <leftValueReference>marketingSubMenu</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Marketing</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Campaigns</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>Marketing_Desc_Journeys</name>
+            <fieldText>Customer Journeys - Design automated multi-channel customer journeys.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>marketingSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Journeys</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Marketing_Desc_Email</name>
+            <fieldText>Email Studio - Create, send, and track email marketing campaigns.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>marketingSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Email</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Marketing_Desc_Social</name>
+            <fieldText>Social Studio - Manage social media presence and engagement.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>marketingSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Social</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Marketing_Desc_Advertising</name>
+            <fieldText>Advertising - Manage paid media across channels.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>marketingSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Advertising</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
 
-        <!-- ANALYTICS SUB-MENU -->
+    <screens>
+        <name>Sub_Menu_Analytics</name>
+        <label>Analytics Sub Menu</label>
+        <locationX>410</locationX>
+        <locationY>300</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector><targetReference>Set_Analytics_Selection</targetReference></connector>
+        <fields>
+            <name>Header_Sub_Analytics</name>
+            <fieldText>Analytics Module - Sub Menu</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>analyticsSubMenu</name>
             <choiceReferences>Choice_Analytics_Dashboards</choiceReferences>
@@ -554,21 +794,80 @@ Select a feature area within {!mainMenuSelection}</fieldText>
             <dataType>String</dataType>
             <fieldText>Analytics Features</fieldText>
             <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <helpText>Choose an Analytics feature to manage</helpText>
+        </fields>
+        <fields>
+            <name>Analytics_Desc_Dashboards</name>
+            <fieldText>Dashboards - Visualize KPIs with interactive dashboard components.</fieldText>
+            <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>mainMenuSelection</leftValueReference>
+                    <leftValueReference>analyticsSubMenu</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Analytics</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Dashboards</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>Analytics_Desc_Reports</name>
+            <fieldText>Reports - Build tabular, summary, and matrix reports.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>analyticsSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Reports</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Analytics_Desc_Einstein</name>
+            <fieldText>Einstein Discovery - AI-powered insights and predictions.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>analyticsSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Einstein</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Analytics_Desc_Tableau</name>
+            <fieldText>Tableau CRM - Advanced analytics and data visualization.</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>analyticsSubMenu</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue><stringValue>Tableau</stringValue></rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
 
-        <!-- SETTINGS SUB-MENU -->
+    <screens>
+        <name>Sub_Menu_Settings</name>
+        <label>Settings Sub Menu</label>
+        <locationX>530</locationX>
+        <locationY>300</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector><targetReference>Set_Settings_Selection</targetReference></connector>
+        <fields>
+            <name>Header_Sub_Settings</name>
+            <fieldText>Settings Module - Sub Menu</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>settingsSubMenu</name>
             <choiceReferences>Choice_Settings_Users</choiceReferences>
@@ -579,312 +878,12 @@ Select a feature area within {!mainMenuSelection}</fieldText>
             <dataType>String</dataType>
             <fieldText>Settings Features</fieldText>
             <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <helpText>Choose a Settings area to manage</helpText>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>mainMenuSelection</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Settings</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-
-        <!-- Dynamic Description based on sub-menu selection -->
-        <fields>
-            <name>Sub_Desc_Leads</name>
-            <fieldText>Leads Management - Capture, qualify, and convert leads into opportunities.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>salesSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Leads</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
-            <name>Sub_Desc_Opportunities</name>
-            <fieldText>Opportunities - Track deals through stages, forecast revenue, manage pipelines.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>salesSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Opportunities</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Accounts</name>
-            <fieldText>Accounts and Contacts - Manage customer accounts, contacts, and relationships.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>salesSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Accounts</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Forecast</name>
-            <fieldText>Forecasting - Predict revenue, set quotas, analyze pipeline health.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>salesSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Forecast</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Quotes</name>
-            <fieldText>Quotes and Orders - Generate quotes, manage orders, process contracts.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>salesSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Quotes</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-
-        <fields>
-            <name>Sub_Desc_Cases</name>
-            <fieldText>Case Management - Log, track, and resolve customer issues efficiently.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>serviceSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Cases</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Knowledge</name>
-            <fieldText>Knowledge Base - Create and manage articles for self-service support.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>serviceSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Knowledge</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Console</name>
-            <fieldText>Service Console - Unified agent workspace for multi-channel support.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>serviceSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Console</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Chat</name>
-            <fieldText>Live Chat and Bot - Real-time chat and Einstein Bot automation.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>serviceSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Chat</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_SLA</name>
-            <fieldText>SLAs and Entitlements - Define service levels, milestones, and entitlements.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>serviceSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>SLA</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-
-        <fields>
-            <name>Sub_Desc_Campaigns</name>
-            <fieldText>Campaigns - Plan, execute, and measure marketing campaigns.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>marketingSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Campaigns</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Journeys</name>
-            <fieldText>Customer Journeys - Design automated multi-channel customer journeys.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>marketingSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Journeys</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Email</name>
-            <fieldText>Email Studio - Create, send, and track email marketing campaigns.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>marketingSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Email</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Social</name>
-            <fieldText>Social Studio - Manage social media presence and engagement.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>marketingSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Social</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Advertising</name>
-            <fieldText>Advertising - Manage paid media across channels.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>marketingSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Advertising</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-
-        <fields>
-            <name>Sub_Desc_Dashboards</name>
-            <fieldText>Dashboards - Visualize KPIs with interactive dashboard components.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>analyticsSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Dashboards</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Reports</name>
-            <fieldText>Reports - Build tabular, summary, and matrix reports.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>analyticsSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Reports</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Einstein</name>
-            <fieldText>Einstein Discovery - AI-powered insights and predictions.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>analyticsSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Einstein</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Sub_Desc_Tableau</name>
-            <fieldText>Tableau CRM - Advanced analytics and data visualization.</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>analyticsSubMenu</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Tableau</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-
-        <fields>
-            <name>Sub_Desc_Users</name>
+            <name>Settings_Desc_Users</name>
             <fieldText>Users and Permissions - Manage users, permission sets, and access.</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
@@ -892,14 +891,12 @@ Select a feature area within {!mainMenuSelection}</fieldText>
                 <conditions>
                     <leftValueReference>settingsSubMenu</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Users</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Users</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Sub_Desc_Profiles</name>
+            <name>Settings_Desc_Profiles</name>
             <fieldText>Profiles and Roles - Configure profiles, roles, and sharing settings.</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
@@ -907,14 +904,12 @@ Select a feature area within {!mainMenuSelection}</fieldText>
                 <conditions>
                     <leftValueReference>settingsSubMenu</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Profiles</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Profiles</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Sub_Desc_Security</name>
+            <name>Settings_Desc_Security</name>
             <fieldText>Security Controls - Session settings, login policies, encryption.</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
@@ -922,14 +917,12 @@ Select a feature area within {!mainMenuSelection}</fieldText>
                 <conditions>
                     <leftValueReference>settingsSubMenu</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Security</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Security</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Sub_Desc_Data</name>
+            <name>Settings_Desc_Data</name>
             <fieldText>Data Management - Import, export, backup, and data quality tools.</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
@@ -937,14 +930,12 @@ Select a feature area within {!mainMenuSelection}</fieldText>
                 <conditions>
                     <leftValueReference>settingsSubMenu</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Data</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Data</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Sub_Desc_Automation</name>
+            <name>Settings_Desc_Automation</name>
             <fieldText>Automation - Flow Builder, Process Builder, Apex triggers.</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
@@ -952,46 +943,30 @@ Select a feature area within {!mainMenuSelection}</fieldText>
                 <conditions>
                     <leftValueReference>settingsSubMenu</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Automation</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Automation</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
-
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- ============================================================
-         SCREEN 3: ACTION MENU (Third Level - What to do with selection)
-         ============================================================ -->
     <screens>
         <name>Action_Menu</name>
         <label>Action Menu</label>
         <locationX>50</locationX>
-        <locationY>400</locationY>
+        <locationY>560</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Confirmation</targetReference>
-        </connector>
+        <connector><targetReference>Confirmation</targetReference></connector>
         <fields>
             <name>Header_Action</name>
             <fieldText>Action Selection
-
-Module: {!mainMenuSelection} > Feature: {!subMenuSelection}</fieldText>
+Module: {!mainMenuSelection}
+Feature: {!subMenuSelection}</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-
-        <fields>
-            <name>subMenuSelection</name>
-            <dataType>String</dataType>
-            <fieldText>Selected Feature</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-
         <fields>
             <name>actionSelection</name>
             <choiceReferences>Action_View</choiceReferences>
@@ -1002,11 +977,10 @@ Module: {!mainMenuSelection} > Feature: {!subMenuSelection}</fieldText>
             <dataType>String</dataType>
             <fieldText>What would you like to do?</fieldText>
             <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <helpText>Select an action to perform on the chosen feature</helpText>
         </fields>
-
-        <!-- Dynamic action descriptions -->
         <fields>
             <name>Action_Desc_View</name>
             <fieldText>View Records - Browse list views, apply filters, and inspect record details.</fieldText>
@@ -1016,9 +990,7 @@ Module: {!mainMenuSelection} > Feature: {!subMenuSelection}</fieldText>
                 <conditions>
                     <leftValueReference>actionSelection</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>View</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>View</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
@@ -1031,9 +1003,7 @@ Module: {!mainMenuSelection} > Feature: {!subMenuSelection}</fieldText>
                 <conditions>
                     <leftValueReference>actionSelection</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Create</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Create</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
@@ -1041,29 +1011,25 @@ Module: {!mainMenuSelection} > Feature: {!subMenuSelection}</fieldText>
             <name>Action_Desc_Edit</name>
             <fieldText>Edit and Update - Modify existing records with inline editing or full form.</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>actionSelection</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Edit</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
+                <visibilityRule>
+                    <conditionLogic>and</conditionLogic>
+                    <conditions>
+                        <leftValueReference>actionSelection</leftValueReference>
+                        <operator>EqualTo</operator>
+                        <rightValue><stringValue>Edit</stringValue></rightValue>
+                    </conditions>
+                </visibilityRule>
         </fields>
         <fields>
             <name>Action_Desc_Delete</name>
-            <fieldText>Delete and Archive - Permanently delete or archive records (with confirmation).</fieldText>
+            <fieldText>Delete and Archive - Permanently delete or archive records(with confirmation).</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>actionSelection</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Delete</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Delete</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
@@ -1076,28 +1042,23 @@ Module: {!mainMenuSelection} > Feature: {!subMenuSelection}</fieldText>
                 <conditions>
                     <leftValueReference>actionSelection</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Export</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Export</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
-
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- ============================================================
-         SCREEN 4: CONFIRMATION
-         ============================================================ -->
     <screens>
         <name>Confirmation</name>
         <label>Confirmation</label>
         <locationX>50</locationX>
-        <locationY>550</locationY>
+        <locationY>680</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector><targetReference>Route_Confirm</targetReference></connector>
         <fields>
             <name>Header_Confirm</name>
             <fieldText>Confirm Action</fieldText>
@@ -1123,41 +1084,35 @@ Action: {!actionSelection}</fieldText>
             <dataType>String</dataType>
             <fieldText>Confirm</fieldText>
             <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Success_Message</name>
             <fieldText>Action Confirmed!
-
 Proceeding to {!actionSelection} {!subMenuSelection} in {!mainMenuSelection}...
-
-In a real implementation, this would navigate to the selected feature or launch a sub-flow.</fieldText>
+Click Finish to continue.</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>confirmationChoice</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Yes</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>Yes</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Cancel_Message</name>
             <fieldText>Action Cancelled
-
-Returning to the Action Menu. Use Previous to change your selection.</fieldText>
+Click Finish and you will be returned to the Action Menu.</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>confirmationChoice</leftValueReference>
                     <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>No</stringValue>
-                    </rightValue>
+                    <rightValue><stringValue>No</stringValue></rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
@@ -1165,125 +1120,16 @@ Returning to the Action Menu. Use Previous to change your selection.</fieldText>
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- ============================================================
-         ASSIGNMENT: Set subMenuSelection for display in Action Menu
-         ============================================================ -->
-    <assignments>
-        <name>Set_SubMenu_Selection</name>
-        <label>Set Sub-Menu Selection Variable</label>
+    <start>
         <locationX>50</locationX>
-        <locationY>150</locationY>
-        <connector>
-            <targetReference>Sub_Menu</targetReference>
-        </connector>
-        <assignmentItems>
-            <assignToReference>subMenuSelection</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>
-                    salesSubMenu
-                </elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>subMenuSelection</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>
-                    serviceSubMenu
-                </elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>subMenuSelection</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>
-                    marketingSubMenu
-                </elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>subMenuSelection</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>
-                    analyticsSubMenu
-                </elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>subMenuSelection</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>
-                    settingsSubMenu
-                </elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
+        <locationY>0</locationY>
+        <connector><targetReference>Main_Menu</targetReference></connector>
+    </start>
 
-    <!-- ============================================================
-         VARIABLES
-         ============================================================ -->
-    <variables>
-        <name>mainMenuSelection</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>salesSubMenu</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>serviceSubMenu</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>marketingSubMenu</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>analyticsSubMenu</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>settingsSubMenu</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
+    <status>Draft</status>
+
     <variables>
         <name>subMenuSelection</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>actionSelection</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>confirmationChoice</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
