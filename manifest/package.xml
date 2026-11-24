@@ -32,9 +32,10 @@
         <members>*</members>
         <name>StaticResource</name>
     </types>-->
-     <types>
+    <types>
         <members>*</members>
         <name>NamedCredential</name>
     </types>
+
     <version>62.0</version>
 </Package>

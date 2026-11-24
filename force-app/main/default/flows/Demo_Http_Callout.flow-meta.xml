@@ -71,5 +71,5 @@
             <targetReference>DemoJokeCallout</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Available</status>
 </Flow>
