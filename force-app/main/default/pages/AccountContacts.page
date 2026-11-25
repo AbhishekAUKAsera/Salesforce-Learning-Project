@@ -1,0 +1,41 @@
+<apex:page Controller='AccountContactController' showHeader="true">
+    <apex:form>
+        <apex:pageBlock title="Select an Account">
+            <apex:selectList id="accountPick" size="1" onchange="loadContacts(this.value)">
+                <apex:selectOptions value="{!accountOptions}"/>
+            </apex:selectList>
+        </apex:pageBlock>
+    </apex:form>
+
+    <apex:PageBlock title="Contacts">
+        <div id='contactList'>Choose an Account above.</div>
+    </apex:PageBlock>
+
+    <script>
+        function loadContacts(accountId){
+            if(!accountId){
+                document.getElementById('contactList').innerHTML = 'Choose an account above.';
+                return;
+            }
+            document.getElementById('contactList').innerHTML = 'Loading';
+            // Call the @RemoteAction method. The page's JavaScript calls it
+            // as AccountContactController.getContacts(...).
+            AccountContactController.getContacts(accountId, function(result, event){
+                if(!event.status){
+                    document.getElementById('contactList').innerHTML = 'Error : ' +event.message;
+                    return;
+                }
+                if(result.length === 0){
+                    document.getElementById('contactList').innerHTML = 'No Contacts Found.';
+                    return;
+                }
+                var html = '<ul>';
+                result.forEach(function(c){
+                    html += '<li>' + c.FirstName + ' ' + c.LastName + ' (' + (c.Email || 'no Email') + ')</li>';
+                });
+                html +='</ul>';
+                document.getElementById('contactList').innerHTML = html;
+                }, {escape: true});
+        }
+    </script>
+</apex:page>
