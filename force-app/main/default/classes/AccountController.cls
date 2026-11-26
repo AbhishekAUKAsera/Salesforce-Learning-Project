@@ -72,4 +72,24 @@ public with sharing class AccountController {
             throw auraEx;
         }
     }
+
+    /**
+     * @description Fetches a single Account record by Id for a record page / component.
+     *              Runs in USER_MODE so field-level security is enforced, and returns
+     *              null instead of throwing when the record is not visible to the user.
+     *
+     * @param       accountId (Id) - The Id of the Account to retrieve.
+     * @return      Account - A record with Id, Name, Industry and Phone, or null if not found.
+     **/
+    @AuraEnabled(cacheable=true)
+    public static Account getAccountDetails(Id accountId) {
+        List<Account> accounts = [
+            SELECT Id, Name, Industry, Phone
+            FROM Account
+            WHERE Id = :accountId
+            WITH USER_MODE
+            LIMIT 1
+        ];
+        return accounts.isEmpty() ? null : accounts[0];
+    }
 }

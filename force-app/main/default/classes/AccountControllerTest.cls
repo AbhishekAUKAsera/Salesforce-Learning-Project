@@ -196,6 +196,25 @@ private class AccountControllerTest {
     }
 
     /**
+     * @description Verifies getAccountDetails returns the requested record and null for an unknown Id.
+     **/
+    @IsTest
+    static void testGetAccountDetails() {
+        Account acc = [SELECT Id FROM Account WHERE Name LIKE 'Apex Tech%' LIMIT 1];
+
+        Test.startTest();
+        Account result = AccountController.getAccountDetails(acc.Id);
+        Account missingResult = AccountController.getAccountDetails(null);
+        Test.stopTest();
+
+        Assert.isNotNull(result, 'Account should be returned for a valid Id');
+        Assert.areEqual(acc.Id, result.Id, 'Returned Account Id should match the requested Id');
+        Assert.isNotNull(result.Name, 'Account Name should be populated');
+
+        Assert.isNull(missingResult, 'Should return null when no Account matches the Id');
+    }
+
+    /**
      * @description Verifies execution under a Standard User profile respecting sharing and USER_MODE
      *              without performing DML on User (to support parallel Apex test execution).
      **/

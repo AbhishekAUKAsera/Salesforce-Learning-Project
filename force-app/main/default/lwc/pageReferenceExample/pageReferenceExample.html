@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="Account Details" if:true={account}>
+        <p class="slds-p-horizontal_small">
+            <strong>Name:</strong> {account.Name}
+        </p>
+        <p class="slds-p-horizontal_small">
+            <strong>Industry:</strong> {account.Industry}
+        </p>
+        <p class="slds-p-horizontal_small">
+            <strong>Phone:</strong> {account.Phone}
+        </p>
+    </lightning-card>
+
+    <template if:true={error}>
+        <div class="slds-text-color_error">{error}</div>
+    </template>
+
+    <template if:true={recordId && !account}>
+        <div class="slds-text-color_warning">Loading account details...</div>
+    </template>
+</template>
