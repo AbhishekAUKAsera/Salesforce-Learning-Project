@@ -1,0 +1,30 @@
+<template>
+    <lightning-card title="Recent Contacts" icon-name="standard:contact">
+        <template if:true={loading}>
+            <div class="spinner-container slds-p-around_medium">
+                <lightning-spinner alternative-text="Loading Contacts" size="small"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:false={loading}>
+            <template if:true={contacts.length}>
+                <ul class="contact-list slds-list_vertical slds-p-horizontal_small">
+                    <template for:each={contacts} for:item="contact">
+                        <li key={contact.Id} class="contact-item slds-p-vertical_x-small" data-id={contact.Id} role="button" tabindex="0" onclick={handleClick}
+                        onkeydown={handleKeyDown}>
+                            <div class="slds-grid slds-grid_align-spread slds-align_absolute-center">
+                                <span class="contact-name">{contact.Name}</span>
+                                <span class="contact-meta">{contact.Title}</span>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+            <template if:false={contacts.length}>
+                <div class="empty-state slds-p-around_medium">
+                    No recent Contacts found.
+                </div>
+            </template>
+        </template>
+    </lightning-card>
+</template>
