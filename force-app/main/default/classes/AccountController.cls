@@ -92,4 +92,27 @@ public with sharing class AccountController {
         ];
         return accounts.isEmpty() ? null : accounts[0];
     }
+
+    /**
+     * @description Retrieves up to 10 Account records filtered by the given Industry value.
+     *              Runs in USER_MODE so field-level security is enforced.
+     *
+     * @param       industryValue (String) - The Industry picklist value used to filter Accounts.
+     * @return      List<Account> - A list of Account records (Id, Name, Industry, Phone) matching the Industry.
+     *              Returns an empty list (never null) when no industry is supplied.
+     **/
+    @AuraEnabled(cacheable=true)
+    public static List<Account> getAccounts(String industryValue) {
+        if (String.isBlank(industryValue)) {
+            return new List<Account>();
+        }
+
+        return [
+            SELECT Id, Name, Industry, Phone
+            FROM Account
+            WHERE Industry = :industryValue
+            WITH USER_MODE
+            LIMIT 10
+        ];
+    }
 }
